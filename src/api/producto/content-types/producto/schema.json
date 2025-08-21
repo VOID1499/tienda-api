@@ -1,0 +1,113 @@
+{
+  "kind": "collectionType",
+  "collectionName": "productos",
+  "info": {
+    "singularName": "producto",
+    "pluralName": "productos",
+    "displayName": "producto"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "nombre": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "nombre",
+      "required": true
+    },
+    "descripcion": {
+      "type": "text"
+    },
+    "imagen": {
+      "type": "media",
+      "multiple": true,
+      "allowedTypes": [
+        "images",
+        "files"
+      ]
+    },
+    "precio": {
+      "type": "integer",
+      "required": true,
+      "default": 0,
+      "min": 0
+    },
+    "destacado": {
+      "type": "boolean",
+      "required": true,
+      "default": false
+    },
+    "habilitar_stock": {
+      "type": "boolean",
+      "required": true,
+      "default": true
+    },
+    "stock_total": {
+      "type": "integer",
+      "required": true,
+      "default": 0,
+      "min": 0
+    },
+    "stock_reservado": {
+      "type": "integer",
+      "required": true,
+      "default": 0,
+      "min": 0
+    },
+    "stock_disponible": {
+      "type": "integer",
+      "required": true,
+      "default": 0,
+      "min": 0
+    },
+    "descuento_porcentaje": {
+      "type": "integer",
+      "required": false,
+      "min": 0,
+      "max": 100
+    },
+    "tipo": {
+      "type": "enumeration",
+      "enum": [
+        "simple",
+        "variable"
+      ]
+    },
+    "categoria": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::categoria.categoria",
+      "inversedBy": "productos"
+    },
+    "orden_detalles": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::orden-detalle.orden-detalle",
+      "mappedBy": "producto"
+    },
+    "dimension": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::dimension.dimension",
+      "inversedBy": "productos"
+    },
+    "productos": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::producto.producto",
+      "mappedBy": "producto"
+    },
+    "producto": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::producto.producto",
+      "inversedBy": "productos"
+    }
+  }
+}
