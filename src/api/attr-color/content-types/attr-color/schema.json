@@ -1,0 +1,26 @@
+{
+  "kind": "collectionType",
+  "collectionName": "attr_colors",
+  "info": {
+    "singularName": "attr-color",
+    "pluralName": "attr-colors",
+    "displayName": "attr_color"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "color": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "productos": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::producto.producto",
+      "mappedBy": "attr_color"
+    }
+  }
+}

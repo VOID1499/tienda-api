@@ -373,6 +373,37 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiAttrColorAttrColor extends Struct.CollectionTypeSchema {
+  collectionName: 'attr_colors';
+  info: {
+    displayName: 'attr_color';
+    pluralName: 'attr-colors';
+    singularName: 'attr-color';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    color: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::attr-color.attr-color'
+    > &
+      Schema.Attribute.Private;
+    productos: Schema.Attribute.Relation<'oneToMany', 'api::producto.producto'>;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiCategoriaCategoria extends Struct.CollectionTypeSchema {
   collectionName: 'categorias';
   info: {
@@ -719,6 +750,10 @@ export interface ApiProductoProducto extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
+    attr_color: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::attr-color.attr-color'
+    >;
     categoria: Schema.Attribute.Relation<
       'manyToOne',
       'api::categoria.categoria'
@@ -752,9 +787,7 @@ export interface ApiProductoProducto extends Struct.CollectionTypeSchema {
       'api::producto.producto'
     > &
       Schema.Attribute.Private;
-    nombre: Schema.Attribute.String &
-      Schema.Attribute.Required &
-      Schema.Attribute.Unique;
+    nombre: Schema.Attribute.String & Schema.Attribute.Unique;
     orden_detalles: Schema.Attribute.Relation<
       'oneToMany',
       'api::orden-detalle.orden-detalle'
@@ -771,7 +804,7 @@ export interface ApiProductoProducto extends Struct.CollectionTypeSchema {
     producto: Schema.Attribute.Relation<'manyToOne', 'api::producto.producto'>;
     productos: Schema.Attribute.Relation<'oneToMany', 'api::producto.producto'>;
     publishedAt: Schema.Attribute.DateTime;
-    slug: Schema.Attribute.UID<'nombre'> & Schema.Attribute.Required;
+    slug: Schema.Attribute.UID<'nombre'>;
     stock_disponible: Schema.Attribute.Integer &
       Schema.Attribute.Required &
       Schema.Attribute.SetMinMax<
@@ -1346,6 +1379,7 @@ declare module '@strapi/strapi' {
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
+      'api::attr-color.attr-color': ApiAttrColorAttrColor;
       'api::categoria.categoria': ApiCategoriaCategoria;
       'api::dimension.dimension': ApiDimensionDimension;
       'api::metodos-de-envio.metodos-de-envio': ApiMetodosDeEnvioMetodosDeEnvio;

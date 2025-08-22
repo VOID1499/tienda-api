@@ -5,14 +5,11 @@ const { ApplicationError } = errors;
 module.exports = {
   
   async khipu(ctx) {
+    try {
     const signature = ctx.request.header['x-khipu-signature'];
     const payload = ctx.request.body;
 
-    const transactionId = ctx.request.body.data.documentId;
-    
-    try {
-      
-      await strapi.service("api::orden.orden").cambiarEstadoOrden(transactionId,"pagada");
+    await strapi.service("api::orden.orden").cambiarEstadoOrden(payload.transaction_id,"pagada");
 
       //204 no content
       ctx.send();

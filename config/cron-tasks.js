@@ -17,6 +17,7 @@ module.exports = {
     },
     options: {
       rule: "*/5 * * * * *",
+      //rule: "0 3 * * *"
     },
   },
 };

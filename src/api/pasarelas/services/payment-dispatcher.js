@@ -10,12 +10,19 @@ module.exports = ({ strapi }) => {
 
   return {
 
-    async verificarEstadoDeCobro(orden) {
-      if (!orden.metodos_de_pago) {
-        throw new Error(`La orden ${orden.id} no tiene método de pago asignado`);
-      }
+    async verificarEstadoDeCobro(documentId) {
 
-      const metodo = orden.metodos_de_pago.nombre.trim();
+       const ordenEncontrada = await strapi.documents("api::orden.orden").findOne({
+        documentId:documentId,
+        populate:{
+          metodos_de_pago:true
+        }
+      })
+   
+      if(!ordenEncontrada){
+        throw new Error(`No se encontro la orden`)
+      }
+      const metodo = ordenEncontrada.metodos_de_pago.nombre.trim();
       console.log(`Buscando proveedor para método: "${metodo}"`);
 
       const provider = providers[metodo];
@@ -23,23 +30,30 @@ module.exports = ({ strapi }) => {
         throw new Error(`Proveedor de pago desconocido: ${metodo}`);
       }
 
-      return await provider.verificarEstadoDeCobro(orden);
+      return await provider.verificarEstadoDeCobro(ordenEncontrada);
     },
 
-    async cancelarCobro(orden){
-     
-      if (!orden.metodos_de_pago) {
-        throw new Error(`La orden ${orden.id} no tiene método de pago asignado`);
+    async cancelarCobro(documentId){
+      
+      const ordenEncontrada = await strapi.documents("api::orden.orden").findOne({
+        documentId:documentId,
+        populate:{
+          metodos_de_pago:true
+        }
+      })
+   
+      if(!ordenEncontrada){
+        throw new Error(`No se encontro la orden`)
       }
 
-      const metodo = orden.metodos_de_pago.nombre.trim();
+      const metodo = ordenEncontrada.metodos_de_pago.nombre.trim();
       console.log(`Buscando proveedor para método: "${metodo}"`);
 
       const provider = providers[metodo];
       if (!provider) {
         throw new Error(`Proveedor de pago desconocido: ${metodo}`);
       }
-      return await provider.cancelarCobro(orden);
+      return await provider.cancelarCobro(ordenEncontrada);
       
     }
 

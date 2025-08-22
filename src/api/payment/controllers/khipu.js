@@ -24,22 +24,23 @@ module.exports = {
         throw new ApplicationError("Metodo de pago no activo",{ code:"PAYMENT_METHOD_NOT_ACTIVE"});
       }
 
-      const ordenCreada = await strapi.service("api::orden.orden").crearOrden(data,metodoDeEnvio,metodoDePagoKhipu);
+      const {ordenCreada , productosParaDetalleOden} = await strapi.service("api::orden.orden").crearOrden(data,metodoDeEnvio,metodoDePagoKhipu);
       
-      const response = await strapi.service("api::pasarelas.khipu").crearCobro(ordenCreada,metodoDePagoKhipu);
+      const response = await strapi.service("api::pasarelas.khipu").crearCobro({ordenCreada,productosParaDetalleOden},metodoDePagoKhipu);
 
+    
       await strapi.documents("api::orden.orden").update({
         documentId:ordenCreada.documentId,
         data:{
           "payment_id":response.payment_id
-        },
-        status:"published"
+        }
       })
 
       // Responder con la orden creada o mensaje OK
       ctx.body = {
             data: {
-                ...response
+                ...response,
+                orden:ordenCreada
             }
         };
 

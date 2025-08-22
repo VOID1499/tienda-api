@@ -214,7 +214,7 @@ module.exports = createCoreService('api::orden.orden', ({ strapi }) => ({
       throw new ApplicationError("Error al crear la orden y sus detalles");
     }
 
-    return ordenCreada;
+    return {ordenCreada , productosParaDetalleOden }
  
   },
 
@@ -224,10 +224,12 @@ module.exports = createCoreService('api::orden.orden', ({ strapi }) => ({
     try {
       await strapi.db.transaction(async ({ onCommit, onRollback }) => {
 
+        //buscar la orden
           const ordenEncontrada = await strapi.documents("api::orden.orden").findOne({
             documentId:documentId
           })
       
+          //busca los detalles de la orden con stock real
           const detallesOrdenConStockReal = await strapi.documents("api::orden-detalle.orden-detalle").findMany({
               filters:{
                 stock_ficticio:false,
@@ -254,10 +256,17 @@ module.exports = createCoreService('api::orden.orden', ({ strapi }) => ({
               });
             }
             
+            //par el webhook denotificacion
             if(estado == "pagada" && ordenEncontrada.estado == "pendiente"){
-         
+              await strapi.documents("api::orden.orden").update({
+                documentId:documentId,
+                data:{
+                  fecha_de_pago:new Date().toISOString()
+                }
+              })
             }
 
+            //regenerar stocks
             if(estado == "cancelada" && ordenEncontrada.estado == "pendiente"){
           
               for(const detalle of detallesOrdenConStockReal){
@@ -274,6 +283,7 @@ module.exports = createCoreService('api::orden.orden', ({ strapi }) => ({
               }
             }
 
+            //descontar estock real
             if(estado == "enviada" && ordenEncontrada.estado == "pagada"){
             
               for(const detalle of detallesOrdenConStockReal){
@@ -320,16 +330,12 @@ module.exports = createCoreService('api::orden.orden', ({ strapi }) => ({
               createdAt:{
                 $lte:haceUnMinuto
               }
-               
-            },
-            populate: { 
-              metodos_de_pago: true,
             }
           });
 
           const responses = await Promise.allSettled(
              ordenesPendientes.map((orden) =>
-               strapi.service("api::pasarelas.payment-dispatcher").verificarEstadoDeCobro(orden)
+               strapi.service("api::pasarelas.payment-dispatcher").verificarEstadoDeCobro(orden.documentId)
              )
            );
 
@@ -345,7 +351,7 @@ module.exports = createCoreService('api::orden.orden', ({ strapi }) => ({
 
             //cobro real pendiente -> se cancela el cobro real y la orden queda candelada
             if(item.res.value == "pending"){
-             await strapi.service("api::pasarelas.payment-dispatcher").cancelarCobro(item.orden); 
+             await strapi.service("api::pasarelas.payment-dispatcher").cancelarCobro(item.orden.documentId); 
              await this.cambiarEstadoOrden(item.orden.documentId,"cancelada");
             }
 

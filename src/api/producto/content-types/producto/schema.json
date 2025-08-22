@@ -13,13 +13,13 @@
   "attributes": {
     "nombre": {
       "type": "string",
-      "required": true,
+      "required": false,
       "unique": true
     },
     "slug": {
       "type": "uid",
       "targetField": "nombre",
-      "required": true
+      "required": false
     },
     "descripcion": {
       "type": "text"
@@ -107,6 +107,12 @@
       "type": "relation",
       "relation": "manyToOne",
       "target": "api::producto.producto",
+      "inversedBy": "productos"
+    },
+    "attr_color": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::attr-color.attr-color",
       "inversedBy": "productos"
     }
   }
