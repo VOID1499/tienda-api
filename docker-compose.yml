@@ -1,4 +1,4 @@
-version: '3'
+version: '3.9'
 services:
   tienda-api:
     container_name: tienda-api
@@ -27,7 +27,7 @@ services:
     ports:
       - '1337:1337'
     networks:
-      - tienda-api
+      - red-1
     depends_on:
       - tienda-apiDB
       
@@ -48,7 +48,7 @@ services:
     ports:
       - '5432:5432'
     networks:
-      - tienda-api
+      - red-1
       
   tienda-apiAdminer:
     container_name: tienda-apiAdminer
@@ -59,14 +59,15 @@ services:
     environment:
       - ADMINER_DEFAULT_SERVER=tienda-apiDB
     networks:
-      - tienda-api
+      - red-1
     depends_on:
       - tienda-apiDB
 
 volumes:
   tienda-api-data:
+  
 
 networks:
-  tienda-api:
-    name: Tienda-api
+  red-1:
+    name: red-1
     driver: bridge

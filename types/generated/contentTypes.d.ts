@@ -430,7 +430,7 @@ export interface ApiCategoriaCategoria extends Struct.CollectionTypeSchema {
     destacado: Schema.Attribute.Boolean &
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<false>;
-    imagen: Schema.Attribute.Media<'images' | 'files', true>;
+    imagen: Schema.Attribute.Media<'images' | 'files'>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -506,6 +506,42 @@ export interface ApiDimensionDimension extends Struct.CollectionTypeSchema {
       >;
     productos: Schema.Attribute.Relation<'oneToMany', 'api::producto.producto'>;
     publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiInformacionGeneralInformacionGeneral
+  extends Struct.SingleTypeSchema {
+  collectionName: 'informacion_generals';
+  info: {
+    displayName: 'informacion_general';
+    pluralName: 'informacion-generals';
+    singularName: 'informacion-general';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::informacion-general.informacion-general'
+    > &
+      Schema.Attribute.Private;
+    logo: Schema.Attribute.Media<'images' | 'files'>;
+    publishedAt: Schema.Attribute.DateTime;
+    redes_sociales: Schema.Attribute.Component<
+      'informacion-del-sitio.red-social',
+      true
+    >;
+    titulo: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1382,6 +1418,7 @@ declare module '@strapi/strapi' {
       'api::attr-color.attr-color': ApiAttrColorAttrColor;
       'api::categoria.categoria': ApiCategoriaCategoria;
       'api::dimension.dimension': ApiDimensionDimension;
+      'api::informacion-general.informacion-general': ApiInformacionGeneralInformacionGeneral;
       'api::metodos-de-envio.metodos-de-envio': ApiMetodosDeEnvioMetodosDeEnvio;
       'api::metodos-de-pago.metodos-de-pago': ApiMetodosDePagoMetodosDePago;
       'api::orden-detalle.orden-detalle': ApiOrdenDetalleOrdenDetalle;

@@ -1,0 +1,33 @@
+{
+  "kind": "singleType",
+  "collectionName": "informacion_generals",
+  "info": {
+    "singularName": "informacion-general",
+    "pluralName": "informacion-generals",
+    "displayName": "informacion_general"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "titulo": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "logo": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files"
+      ]
+    },
+    "redes_sociales": {
+      "type": "component",
+      "component": "informacion-del-sitio.red-social",
+      "repeatable": true
+    }
+  }
+}
