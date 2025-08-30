@@ -22,7 +22,8 @@
       "required": true
     },
     "descripcion": {
-      "type": "text"
+      "type": "text",
+      "required": true
     },
     "destacado": {
       "type": "boolean",

@@ -426,7 +426,7 @@ export interface ApiCategoriaCategoria extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    descripcion: Schema.Attribute.Text;
+    descripcion: Schema.Attribute.Text & Schema.Attribute.Required;
     destacado: Schema.Attribute.Boolean &
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<false>;
@@ -521,12 +521,14 @@ export interface ApiInformacionGeneralInformacionGeneral
     singularName: 'informacion-general';
   };
   options: {
-    draftAndPublish: false;
+    draftAndPublish: true;
   };
   attributes: {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    descripcion: Schema.Attribute.Text & Schema.Attribute.Required;
+    favicon: Schema.Attribute.Media<'images' | 'files'>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -769,6 +771,105 @@ export interface ApiOrdenOrden extends Struct.CollectionTypeSchema {
         },
         number
       >;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiPoliticasDeEnvioPoliticasDeEnvio
+  extends Struct.SingleTypeSchema {
+  collectionName: 'politicas_de_envios';
+  info: {
+    displayName: 'politicas_de_envio';
+    pluralName: 'politicas-de-envios';
+    singularName: 'politicas-de-envio';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    informacion: Schema.Attribute.Blocks;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::politicas-de-envio.politicas-de-envio'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    titulo: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'Pol\u00EDticas de envio'>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiPoliticasDeRembolsoPoliticasDeRembolso
+  extends Struct.SingleTypeSchema {
+  collectionName: 'politicas_de_rembolsos';
+  info: {
+    displayName: 'politicas_de_rembolso';
+    pluralName: 'politicas-de-rembolsos';
+    singularName: 'politicas-de-rembolso';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    informacion: Schema.Attribute.Blocks;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::politicas-de-rembolso.politicas-de-rembolso'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    titulo: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'Pol\u00EDticas de remboloso'>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiPreguntasFrecuentePreguntasFrecuente
+  extends Struct.SingleTypeSchema {
+  collectionName: 'preguntas_frecuentes';
+  info: {
+    displayName: 'preguntas_frecuente';
+    pluralName: 'preguntas-frecuentes';
+    singularName: 'preguntas-frecuente';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::preguntas-frecuente.preguntas-frecuente'
+    > &
+      Schema.Attribute.Private;
+    preguntas_respuestas: Schema.Attribute.Component<
+      'informacion-del-sitio.preguntas-respuestas',
+      true
+    >;
+    publishedAt: Schema.Attribute.DateTime;
+    titulo: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'Preguntas frecuentes'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1423,6 +1524,9 @@ declare module '@strapi/strapi' {
       'api::metodos-de-pago.metodos-de-pago': ApiMetodosDePagoMetodosDePago;
       'api::orden-detalle.orden-detalle': ApiOrdenDetalleOrdenDetalle;
       'api::orden.orden': ApiOrdenOrden;
+      'api::politicas-de-envio.politicas-de-envio': ApiPoliticasDeEnvioPoliticasDeEnvio;
+      'api::politicas-de-rembolso.politicas-de-rembolso': ApiPoliticasDeRembolsoPoliticasDeRembolso;
+      'api::preguntas-frecuente.preguntas-frecuente': ApiPreguntasFrecuentePreguntasFrecuente;
       'api::producto.producto': ApiProductoProducto;
       'api::user-info.user-info': ApiUserInfoUserInfo;
       'plugin::content-releases.release': PluginContentReleasesRelease;

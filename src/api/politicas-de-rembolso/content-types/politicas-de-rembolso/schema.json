@@ -1,0 +1,23 @@
+{
+  "kind": "singleType",
+  "collectionName": "politicas_de_rembolsos",
+  "info": {
+    "singularName": "politicas-de-rembolso",
+    "pluralName": "politicas-de-rembolsos",
+    "displayName": "politicas_de_rembolso"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "titulo": {
+      "type": "string",
+      "default": "Políticas de remboloso",
+      "required": true
+    },
+    "informacion": {
+      "type": "blocks"
+    }
+  }
+}

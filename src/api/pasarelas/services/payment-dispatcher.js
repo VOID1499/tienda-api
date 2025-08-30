@@ -4,7 +4,7 @@ const { cancelarCobro } = require("./khipu");
 module.exports = ({ strapi }) => {
   // Defino providers una vez cuando se crea el servicio
   const providers = {
-    Khipu: strapi.service("api::pasarelas.khipu"),
+    khipu: strapi.service("api::pasarelas.khipu"),
     // otros proveedores
   };
 
