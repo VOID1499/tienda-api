@@ -1,0 +1,32 @@
+{
+  "kind": "collectionType",
+  "collectionName": "paginas_informativas",
+  "info": {
+    "singularName": "paginas-informativa",
+    "pluralName": "paginas-informativas",
+    "displayName": "paginas_informativa"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "titulo": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "titulo"
+    },
+    "informacion": {
+      "type": "richtext"
+    },
+    "secciones": {
+      "type": "component",
+      "component": "info.titulo-informacion",
+      "repeatable": true
+    }
+  }
+}

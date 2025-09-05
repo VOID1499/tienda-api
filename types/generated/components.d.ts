@@ -1,24 +1,23 @@
 import type { Schema, Struct } from '@strapi/strapi';
 
-export interface InformacionDelSitioPreguntasRespuestas
-  extends Struct.ComponentSchema {
-  collectionName: 'components_informacion_del_sitio_preguntas_respuestas';
+export interface InfoLinkTexto extends Struct.ComponentSchema {
+  collectionName: 'components_info_link_textos';
   info: {
-    displayName: 'pregunta_respuesta';
+    displayName: 'link_texto';
   };
   attributes: {
-    pregunta: Schema.Attribute.Text & Schema.Attribute.Required;
-    respuesta: Schema.Attribute.Text & Schema.Attribute.Required;
+    link: Schema.Attribute.String & Schema.Attribute.Required;
+    texto: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
 
-export interface InformacionDelSitioRedSocial extends Struct.ComponentSchema {
-  collectionName: 'components_informacion_del_sitio_red_socials';
+export interface InfoRedSocial extends Struct.ComponentSchema {
+  collectionName: 'components_info_red_socials';
   info: {
-    displayName: 'red_social';
+    displayName: 'link_imagen';
   };
   attributes: {
-    imagen: Schema.Attribute.Media<'images' | 'files'> &
+    imagen: Schema.Attribute.Media<'files' | 'images'> &
       Schema.Attribute.Required;
     link: Schema.Attribute.String &
       Schema.Attribute.Required &
@@ -26,11 +25,23 @@ export interface InformacionDelSitioRedSocial extends Struct.ComponentSchema {
   };
 }
 
+export interface InfoTituloInformacion extends Struct.ComponentSchema {
+  collectionName: 'components_info_titulo_informacions';
+  info: {
+    displayName: 'titulo_informacion';
+  };
+  attributes: {
+    informacion: Schema.Attribute.Text & Schema.Attribute.Required;
+    titulo: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
 declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
-      'informacion-del-sitio.preguntas-respuestas': InformacionDelSitioPreguntasRespuestas;
-      'informacion-del-sitio.red-social': InformacionDelSitioRedSocial;
+      'info.link-texto': InfoLinkTexto;
+      'info.red-social': InfoRedSocial;
+      'info.titulo-informacion': InfoTituloInformacion;
     }
   }
 }

@@ -512,38 +512,33 @@ export interface ApiDimensionDimension extends Struct.CollectionTypeSchema {
   };
 }
 
-export interface ApiInformacionGeneralInformacionGeneral
+export interface ApiInformacionDelSitioInformacionDelSitio
   extends Struct.SingleTypeSchema {
-  collectionName: 'informacion_generals';
+  collectionName: 'informacion_del_sitios';
   info: {
-    displayName: 'informacion_general';
-    pluralName: 'informacion-generals';
-    singularName: 'informacion-general';
+    displayName: 'informacion_del_sitio';
+    pluralName: 'informacion-del-sitios';
+    singularName: 'informacion-del-sitio';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    descripcion: Schema.Attribute.Text & Schema.Attribute.Required;
-    favicon: Schema.Attribute.Media<'images' | 'files'>;
+    desarrollador: Schema.Attribute.Component<'info.link-texto', false>;
+    descripcion: Schema.Attribute.Text;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
-      'api::informacion-general.informacion-general'
+      'api::informacion-del-sitio.informacion-del-sitio'
     > &
       Schema.Attribute.Private;
-    logo: Schema.Attribute.Media<'images' | 'files'>;
+    logo: Schema.Attribute.Media<'files' | 'images'>;
     publishedAt: Schema.Attribute.DateTime;
-    redes_sociales: Schema.Attribute.Component<
-      'informacion-del-sitio.red-social',
-      true
-    >;
-    titulo: Schema.Attribute.String &
-      Schema.Attribute.Required &
-      Schema.Attribute.Unique;
+    redes_sociales: Schema.Attribute.Component<'info.red-social', true>;
+    titulo: Schema.Attribute.String & Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -777,13 +772,13 @@ export interface ApiOrdenOrden extends Struct.CollectionTypeSchema {
   };
 }
 
-export interface ApiPoliticasDeEnvioPoliticasDeEnvio
-  extends Struct.SingleTypeSchema {
-  collectionName: 'politicas_de_envios';
+export interface ApiPaginasInformativaPaginasInformativa
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'paginas_informativas';
   info: {
-    displayName: 'politicas_de_envio';
-    pluralName: 'politicas-de-envios';
-    singularName: 'politicas-de-envio';
+    displayName: 'paginas_informativa';
+    pluralName: 'paginas-informativas';
+    singularName: 'paginas-informativa';
   };
   options: {
     draftAndPublish: true;
@@ -792,84 +787,19 @@ export interface ApiPoliticasDeEnvioPoliticasDeEnvio
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    informacion: Schema.Attribute.Blocks;
+    informacion: Schema.Attribute.RichText;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
-      'api::politicas-de-envio.politicas-de-envio'
+      'api::paginas-informativa.paginas-informativa'
     > &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
+    secciones: Schema.Attribute.Component<'info.titulo-informacion', true>;
+    slug: Schema.Attribute.UID<'titulo'>;
     titulo: Schema.Attribute.String &
       Schema.Attribute.Required &
-      Schema.Attribute.DefaultTo<'Pol\u00EDticas de envio'>;
-    updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-  };
-}
-
-export interface ApiPoliticasDeRembolsoPoliticasDeRembolso
-  extends Struct.SingleTypeSchema {
-  collectionName: 'politicas_de_rembolsos';
-  info: {
-    displayName: 'politicas_de_rembolso';
-    pluralName: 'politicas-de-rembolsos';
-    singularName: 'politicas-de-rembolso';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    informacion: Schema.Attribute.Blocks;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::politicas-de-rembolso.politicas-de-rembolso'
-    > &
-      Schema.Attribute.Private;
-    publishedAt: Schema.Attribute.DateTime;
-    titulo: Schema.Attribute.String &
-      Schema.Attribute.Required &
-      Schema.Attribute.DefaultTo<'Pol\u00EDticas de remboloso'>;
-    updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-  };
-}
-
-export interface ApiPreguntasFrecuentePreguntasFrecuente
-  extends Struct.SingleTypeSchema {
-  collectionName: 'preguntas_frecuentes';
-  info: {
-    displayName: 'preguntas_frecuente';
-    pluralName: 'preguntas-frecuentes';
-    singularName: 'preguntas-frecuente';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::preguntas-frecuente.preguntas-frecuente'
-    > &
-      Schema.Attribute.Private;
-    preguntas_respuestas: Schema.Attribute.Component<
-      'informacion-del-sitio.preguntas-respuestas',
-      true
-    >;
-    publishedAt: Schema.Attribute.DateTime;
-    titulo: Schema.Attribute.String &
-      Schema.Attribute.Required &
-      Schema.Attribute.DefaultTo<'Preguntas frecuentes'>;
+      Schema.Attribute.Unique;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1519,14 +1449,12 @@ declare module '@strapi/strapi' {
       'api::attr-color.attr-color': ApiAttrColorAttrColor;
       'api::categoria.categoria': ApiCategoriaCategoria;
       'api::dimension.dimension': ApiDimensionDimension;
-      'api::informacion-general.informacion-general': ApiInformacionGeneralInformacionGeneral;
+      'api::informacion-del-sitio.informacion-del-sitio': ApiInformacionDelSitioInformacionDelSitio;
       'api::metodos-de-envio.metodos-de-envio': ApiMetodosDeEnvioMetodosDeEnvio;
       'api::metodos-de-pago.metodos-de-pago': ApiMetodosDePagoMetodosDePago;
       'api::orden-detalle.orden-detalle': ApiOrdenDetalleOrdenDetalle;
       'api::orden.orden': ApiOrdenOrden;
-      'api::politicas-de-envio.politicas-de-envio': ApiPoliticasDeEnvioPoliticasDeEnvio;
-      'api::politicas-de-rembolso.politicas-de-rembolso': ApiPoliticasDeRembolsoPoliticasDeRembolso;
-      'api::preguntas-frecuente.preguntas-frecuente': ApiPreguntasFrecuentePreguntasFrecuente;
+      'api::paginas-informativa.paginas-informativa': ApiPaginasInformativaPaginasInformativa;
       'api::producto.producto': ApiProductoProducto;
       'api::user-info.user-info': ApiUserInfoUserInfo;
       'plugin::content-releases.release': PluginContentReleasesRelease;

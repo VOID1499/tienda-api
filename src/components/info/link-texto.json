@@ -1,0 +1,18 @@
+{
+  "collectionName": "components_info_link_textos",
+  "info": {
+    "displayName": "link_texto"
+  },
+  "options": {},
+  "attributes": {
+    "link": {
+      "type": "string",
+      "required": true
+    },
+    "texto": {
+      "type": "string",
+      "required": true
+    }
+  },
+  "config": {}
+}

@@ -1,0 +1,42 @@
+{
+  "kind": "singleType",
+  "collectionName": "informacion_del_sitios",
+  "info": {
+    "singularName": "informacion-del-sitio",
+    "pluralName": "informacion-del-sitios",
+    "displayName": "informacion_del_sitio"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "titulo": {
+      "type": "string",
+      "required": true
+    },
+    "logo": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "files",
+        "images"
+      ]
+    },
+    "descripcion": {
+      "type": "text",
+      "required": false
+    },
+    "redes_sociales": {
+      "type": "component",
+      "component": "info.red-social",
+      "repeatable": true,
+      "required": false
+    },
+    "desarrollador": {
+      "type": "component",
+      "component": "info.link-texto",
+      "repeatable": false
+    }
+  }
+}
