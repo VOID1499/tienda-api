@@ -5,7 +5,8 @@ module.exports = {
     {
       method: "GET",
       path: "/ordens/cancel/:documentId",
-      handler: "orden.cancelar"
+      handler: "orden.cancelar",
+      config:{auth:false}
     },
   ],
 };
