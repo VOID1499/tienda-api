@@ -117,7 +117,7 @@ module.exports = createCoreService('api::orden.orden', ({ strapi }) => ({
       };
     }));
 
-    const productosParaDetalleOden = [];
+    const productosParaDetalleDeOrden = [];
     const productosSinStock = [];
 
     // si el producto arrojo un error como sin stock o no encontrado se añade a productos sin stock 
@@ -125,7 +125,7 @@ module.exports = createCoreService('api::orden.orden', ({ strapi }) => ({
       if (resultado.error) {
         productosSinStock.push(resultado.error);
       } else {
-        productosParaDetalleOden.push(resultado.ok);
+        productosParaDetalleDeOrden.push(resultado.ok);
       }
     }
 
@@ -140,8 +140,8 @@ module.exports = createCoreService('api::orden.orden', ({ strapi }) => ({
 
     // Calculos de orden
 
-     const {volumenTotalCm3, volumenTotalLitros,pesoTotalKg }  = calcularVolumenYPeso(productosParaDetalleOden)
-     const { subtotalSinDescuento, totalConDescuento,descuentoTotal}  = calcularTotales(productosParaDetalleOden)
+     const {volumenTotalCm3, volumenTotalLitros,pesoTotalKg }  = calcularVolumenYPeso(productosParaDetalleDeOrden)
+     const { subtotalSinDescuento, totalConDescuento,descuentoTotal}  = calcularTotales(productosParaDetalleDeOrden)
      let costo_envio = 0;
      if(metodoDeEnvio.tarifa_fija != null){
       costo_envio = metodoDeEnvio.tarifa_fija;
@@ -157,7 +157,7 @@ module.exports = createCoreService('api::orden.orden', ({ strapi }) => ({
         });
 
         // 1. Actualizar stock
-        for (const { cantidad, productoActual } of productosParaDetalleOden) {
+        for (const { cantidad, productoActual } of productosParaDetalleDeOrden) {
           if (!productoActual.stock_ficticio) {
             await trx('productos')
               .where({ document_id: productoActual.documentId })
@@ -194,7 +194,7 @@ module.exports = createCoreService('api::orden.orden', ({ strapi }) => ({
 
 
         // 3. Crear detalles
-        for (const item of productosParaDetalleOden) {
+        for (const item of productosParaDetalleDeOrden) {
           await strapi.documents("api::orden-detalle.orden-detalle").create({
             data: {
               cantidad: item.cantidad,
@@ -214,7 +214,7 @@ module.exports = createCoreService('api::orden.orden', ({ strapi }) => ({
       throw new ApplicationError("Error al crear la orden y sus detalles");
     }
 
-    return {ordenCreada , productosParaDetalleOden }
+    return {ordenCreada , productosParaDetalleDeOrden }
  
   },
 

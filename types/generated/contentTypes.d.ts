@@ -629,9 +629,6 @@ export interface ApiMetodosDePagoMetodosDePago
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    url: Schema.Attribute.String &
-      Schema.Attribute.Required &
-      Schema.Attribute.Unique;
     url_logo: Schema.Attribute.String;
   };
 }

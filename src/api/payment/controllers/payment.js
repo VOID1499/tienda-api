@@ -3,7 +3,10 @@ const { errors } = require('@strapi/utils');
 const { ApplicationError } = errors;
 
 module.exports = {
-  async khipu(ctx) {
+
+
+
+  async crearCobro(ctx) {
     const data = ctx.request.body.data;
 
     console.log(data)
@@ -16,17 +19,17 @@ module.exports = {
         throw new ApplicationError("Metodo de envio no activo",{ code:"SHIPPING_METHOD_NOT_ACTIVE"});
       }
 
-      const metodoDePagoKhipu = await strapi.documents("api::metodos-de-pago.metodos-de-pago").findOne({
+      const metodoDePago = await strapi.documents("api::metodos-de-pago.metodos-de-pago").findOne({
         documentId:data.pago.documentId 
       })
 
-      if(metodoDePagoKhipu.activo == false){
+      if(metodoDePago.activo == false){
         throw new ApplicationError("Metodo de pago no activo",{ code:"PAYMENT_METHOD_NOT_ACTIVE"});
       }
 
-      const {ordenCreada , productosParaDetalleOden} = await strapi.service("api::orden.orden").crearOrden(data,metodoDeEnvio,metodoDePagoKhipu);
+      const {ordenCreada , productosParaDetalleDeOrden} = await strapi.service("api::orden.orden").crearOrden(data,metodoDeEnvio,metodoDePago);
       
-      const response = await strapi.service("api::pasarelas.khipu").crearCobro({ordenCreada,productosParaDetalleOden},metodoDePagoKhipu);
+      const response = await strapi.service("api::pasarelas.payment-dispatcher").crearCobro(ordenCreada,productosParaDetalleDeOrden,metodoDePago);
 
     
       await strapi.documents("api::orden.orden").update({

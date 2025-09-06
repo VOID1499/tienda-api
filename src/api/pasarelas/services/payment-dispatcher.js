@@ -55,7 +55,24 @@ module.exports = ({ strapi }) => {
       }
       return await provider.cancelarCobro(ordenEncontrada);
       
+    },
+
+
+    async crearCobro(ordenCreada,productosParaDetalleDeOrden,metodoDePago){
+    
+      const metodo = metodoDePago.nombre.trim();
+      console.log(`Buscando proveedor para método: "${metodo}"`);
+
+      const provider = providers[metodo];
+      if (!provider) {
+        throw new Error(`Proveedor de pago desconocido: ${metodo}`);
+      }
+
+      return await provider.crearCobro(ordenCreada,productosParaDetalleDeOrden,metodoDePago);
+
     }
 
+
   };
+
 };

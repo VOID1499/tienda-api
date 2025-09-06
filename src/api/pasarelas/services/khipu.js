@@ -5,31 +5,31 @@ const { ApplicationError } = errors;
 module.exports = {
 
   
-  async crearCobro({ordenCreada,productosParaDetalleOden},khipuConfig) {
+  async crearCobro(ordenCreada,productosParaDetalleDeOrden,khipu) {
 
    
     try {
 
-      const apiKey = khipuConfig.configuracion.api_key;
-      const url = `${khipuConfig.configuracion.api_url}/payments`;
+      const apiKey = khipu.configuracion.api_key;
+      const url = `${khipu.configuracion.api_url}/payments`;
 
       let body = "";
 
-      for (let el of productosParaDetalleOden) {
+      for (let el of productosParaDetalleDeOrden) {
         body += `${el.productoActual.infoSnapshot} * ${el.cantidad}\n`;
       }
 
-      // Luego usarlo en el objeto data:
+      
       const data = {
         amount: ordenCreada.total,
         currency: "CLP",
         subject: `Orden ID ${ordenCreada.documentId}`,
         transaction_id: ordenCreada.documentId,
         body,
-        return_url: khipuConfig.configuracion.return_url,
-        cancel_url: khipuConfig.configuracion.cancel_url,
-        picture_url: khipuConfig.configuracion.picture_url,
-        notify_url:khipuConfig.configuracion.notify_url,
+        return_url: khipu.configuracion.return_url,
+        cancel_url: khipu.configuracion.cancel_url,
+        picture_url: khipu.configuracion.picture_url,
+        notify_url:khipu.configuracion.notify_url,
         notify_api_version: "3.0",
         send_email: true,
         payer_name: `${ordenCreada.nombre} ${ordenCreada.apellidos}`,

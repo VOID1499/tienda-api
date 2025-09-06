@@ -4,8 +4,8 @@ module.exports = {
   routes: [
     {
       method: "POST",
-      path: "/payments/khipu",
-      handler: "khipu.khipu",
+      path: "/payment/init",
+      handler: "payment.crearCobro",
       config: { auth: false },
     },
   ],

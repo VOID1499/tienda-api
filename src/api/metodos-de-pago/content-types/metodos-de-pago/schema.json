@@ -26,11 +26,6 @@
       "private": true,
       "required": true
     },
-    "url": {
-      "type": "string",
-      "required": true,
-      "unique": true
-    },
     "url_logo": {
       "type": "string"
     },
