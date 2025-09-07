@@ -46,10 +46,9 @@ services:
       #- ./data:/var/lib/postgresql/data/ # if you want to use a bind folder
 
     ports:
-      - '5432:5432'
+      - '5432'
     networks:
       - tienda-red
-
 
 volumes:
   tienda-api-data:
