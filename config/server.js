@@ -3,7 +3,7 @@ const cronTasks = require("./cron-tasks.js");
 module.exports = ({ env }) => ({
   host: env('HOST', '0.0.0.0'),
   port: env.int('PORT', 1337),
-  url: 'http://localhost:8080/tienda-api',
+  url: process.env.URL,
   app: {
     keys: env.array('APP_KEYS'),
   },
