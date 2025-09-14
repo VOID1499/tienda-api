@@ -7,7 +7,7 @@ module.exports = {
   myJob: {
     task: async ({ strapi }) => {
       try {
-          console.log("verificando ordenes pendientes")
+          console.log("Verificando ordenes pendientes")
         await strapi.service("api::orden.orden").eliminarOrdenesPendientes();
       } catch (error) {
         if(error instanceof ApplicationError){

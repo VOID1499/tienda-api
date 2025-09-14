@@ -328,7 +328,7 @@ module.exports = createCoreService('api::orden.orden', ({ strapi }) => ({
             filters: { 
               estado: "pendiente",
               createdAt:{
-                $lte:haceUnMinuto
+                $lte:hace24Horas
               }
             }
           });

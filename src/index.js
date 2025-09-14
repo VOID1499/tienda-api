@@ -1,4 +1,5 @@
 'use strict';
+const  { testMiddleware } = require("./utils/document-service-middlewares.js");
 
 module.exports = {
   /**
@@ -7,7 +8,13 @@ module.exports = {
    *
    * This gives you an opportunity to extend code.
    */
-  register(/*{ strapi }*/) {},
+    register({ strapi }) {
+    const middlewares = [testMiddleware];
+
+    middlewares.forEach((middleware) => {
+      strapi.documents.use(middleware());
+    });
+  },
 
   /**
    * An asynchronous bootstrap function that runs before
