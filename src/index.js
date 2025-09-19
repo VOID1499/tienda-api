@@ -1,5 +1,5 @@
 'use strict';
-const  { testMiddleware } = require("./utils/document-service-middlewares.js");
+const  { enviarEmailConfirmacionDePago } = require("./utils/document-service-middlewares.js");
 
 module.exports = {
   /**
@@ -9,7 +9,7 @@ module.exports = {
    * This gives you an opportunity to extend code.
    */
     register({ strapi }) {
-    const middlewares = [testMiddleware];
+    const middlewares = [enviarEmailConfirmacionDePago];
 
     middlewares.forEach((middleware) => {
       strapi.documents.use(middleware());

@@ -17,7 +17,9 @@
   "dependencies": {
     "@strapi/plugin-cloud": "5.23.0",
     "@strapi/plugin-users-permissions": "5.23.0",
+    "@strapi/provider-email-amazon-ses": "^5.23.5",
     "@strapi/strapi": "5.23.0",
+    "colors": "^1.4.0",
     "pg": "^8.16.3",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",

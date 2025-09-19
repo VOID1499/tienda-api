@@ -1,6 +1,7 @@
 
 const { errors } = require('@strapi/utils');
 const { ApplicationError } = errors;
+const colors = require("colors");
 
 module.exports = {
 
@@ -102,7 +103,7 @@ module.exports = {
       return responseData.status; 
 
       } catch (error) {
-        console.error("Error consultando el estado de un cobro", error);
+        console.error(colors.bgRed(`Error al consultar el estado de cobro ${error}`));
         throw error; // para que el error se propague
       }
       
