@@ -12,7 +12,9 @@
     "start": "strapi start",
     "strapi": "strapi",
     "upgrade": "npx @strapi/upgrade latest",
-    "upgrade:dry": "npx @strapi/upgrade latest --dry"
+    "upgrade:dry": "npx @strapi/upgrade latest --dry",
+    "build:image": "docker build -f Dockerfile.prod t tienda-api:latest .",
+    "restart" :"docker compose up -d --force-recreate" 
   },
   "dependencies": {
     "@strapi/plugin-cloud": "5.23.0",
