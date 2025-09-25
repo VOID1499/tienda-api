@@ -14,7 +14,7 @@
     "upgrade": "npx @strapi/upgrade latest",
     "upgrade:dry": "npx @strapi/upgrade latest --dry",
     "build:image": "docker build -f Dockerfile.prod t tienda-api:latest .",
-    "restart" :"docker compose up -d --force-recreate" 
+    "restart": "docker compose up -d --force-recreate"
   },
   "dependencies": {
     "@strapi/plugin-cloud": "5.23.0",
@@ -27,6 +27,7 @@
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-router-dom": "^6.0.0",
+    "strapi-plugin-email-designer-5": "^0.0.7",
     "styled-components": "^6.0.0"
   },
   "engines": {

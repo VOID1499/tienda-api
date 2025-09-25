@@ -14,5 +14,32 @@ module.exports = ({ env }) => ({
       },
     },
   },
-  // ...
+ 
+
+   // Configuración del plugin Email Designer v5
+  'email-designer-5': {
+    enabled: true,
+    config: {
+      // Estos mergeTags se añaden como variables disponibles en TODAS tus plantillas
+      mergeTags: {
+        company: {
+          name: 'Company',
+          mergeTags: {
+            name: {
+              name: 'Nombre de la compañia',
+              value: 'Michisytarot',
+              sample: 'ACME Corp',
+            },
+            supportEmail: {
+              name: 'Support Email',
+              value: 'soporte@shibi.space',
+              sample: 'soporte@shibi.space',
+            },
+          },
+        },
+      },
+    },
+  },
+
+  
 });

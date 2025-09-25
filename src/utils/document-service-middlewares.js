@@ -9,11 +9,12 @@ const sendEmailActions = ["publish"];
 const enviarEmailConfirmacionDePago = () => {
   return async (context, next) => {
     const { uid, action, params } = context;
-
+    
     try {
       // Solo si es un update de orden y viene el campo estado
       if (pageTypes.includes(uid) && pageActions.includes(action) && params.data.estado) {
         
+       
         // Obtener estado anterior antes de ejecutar el update
         const previous = await strapi.documents("api::orden.orden").findOne({
           documentId:params.documentId,

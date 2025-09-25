@@ -37,6 +37,16 @@
       "type": "component",
       "component": "info.link-texto",
       "repeatable": false
+    },
+    "cc": {
+      "type": "component",
+      "component": "info.email",
+      "repeatable": true
+    },
+    "bcc": {
+      "type": "component",
+      "component": "info.email",
+      "repeatable": true
     }
   }
 }

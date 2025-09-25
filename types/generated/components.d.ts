@@ -1,5 +1,17 @@
 import type { Schema, Struct } from '@strapi/strapi';
 
+export interface InfoEmail extends Struct.ComponentSchema {
+  collectionName: 'components_info_emails';
+  info: {
+    displayName: 'email';
+  };
+  attributes: {
+    email: Schema.Attribute.Email &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
+  };
+}
+
 export interface InfoLinkTexto extends Struct.ComponentSchema {
   collectionName: 'components_info_link_textos';
   info: {
@@ -39,6 +51,7 @@ export interface InfoTituloInformacion extends Struct.ComponentSchema {
 declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
+      'info.email': InfoEmail;
       'info.link-texto': InfoLinkTexto;
       'info.red-social': InfoRedSocial;
       'info.titulo-informacion': InfoTituloInformacion;
