@@ -1,8 +1,15 @@
 
 
 const formatearPesosCLP = require("../../../utils/formatCurrency.js");
+const moment = require("moment-timezone");
+require("moment/locale/es");
+moment.locale("es");
 
 const { createCoreController } = require('@strapi/strapi').factories;
+
+
+
+
 
 module.exports = createCoreController('api::orden.orden',({ strapi }) =>  ({
 
@@ -12,6 +19,7 @@ module.exports = createCoreController('api::orden.orden',({ strapi }) =>  ({
    
    const { data } = ctx.request.body;
 
+   
     try {
        const emailData = await strapi.documents("api::informacion-del-sitio.informacion-del-sitio").findFirst({
           fields:[],
@@ -46,6 +54,8 @@ module.exports = createCoreController('api::orden.orden',({ strapi }) =>  ({
          previous.orden_detalles.forEach(element => {
             element.precio =  formatearPesosCLP(element.precio)
          });
+
+         previous.createdAt = moment(previous.createdAt).tz("America/Santiago").format('MMMM YYYY h:mm:ss a');
 
          console.log(previous)
 

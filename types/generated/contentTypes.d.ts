@@ -870,7 +870,7 @@ export interface ApiProductoProducto extends Struct.CollectionTypeSchema {
     producto: Schema.Attribute.Relation<'manyToOne', 'api::producto.producto'>;
     productos: Schema.Attribute.Relation<'oneToMany', 'api::producto.producto'>;
     publishedAt: Schema.Attribute.DateTime;
-    slug: Schema.Attribute.UID<'nombre'>;
+    slug: Schema.Attribute.UID<'nombre'> & Schema.Attribute.Required;
     stock_disponible: Schema.Attribute.Integer &
       Schema.Attribute.Required &
       Schema.Attribute.SetMinMax<

@@ -19,7 +19,7 @@
     "slug": {
       "type": "uid",
       "targetField": "nombre",
-      "required": false
+      "required": true
     },
     "descripcion": {
       "type": "text"
