@@ -1,0 +1,29 @@
+{
+  "collectionName": "components_info_configuracion_emails",
+  "info": {
+    "displayName": "configuracion_email"
+  },
+  "options": {},
+  "attributes": {
+    "from": {
+      "type": "email",
+      "required": true
+    },
+    "reply_to": {
+      "type": "email",
+      "required": true
+    },
+    "cc": {
+      "type": "component",
+      "component": "info.email",
+      "repeatable": true,
+      "required": false
+    },
+    "bcc": {
+      "type": "component",
+      "component": "info.email",
+      "repeatable": true
+    }
+  },
+  "config": {}
+}

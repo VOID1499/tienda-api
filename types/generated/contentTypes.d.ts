@@ -524,13 +524,16 @@ export interface ApiInformacionDelSitioInformacionDelSitio
     draftAndPublish: false;
   };
   attributes: {
-    bcc: Schema.Attribute.Component<'info.email', true>;
-    cc: Schema.Attribute.Component<'info.email', true>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     desarrollador: Schema.Attribute.Component<'info.link-texto', false>;
     descripcion: Schema.Attribute.Text;
+    email_config: Schema.Attribute.Component<
+      'info.configuracion-email',
+      false
+    > &
+      Schema.Attribute.Required;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',

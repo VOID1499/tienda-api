@@ -38,15 +38,11 @@
       "component": "info.link-texto",
       "repeatable": false
     },
-    "cc": {
+    "email_config": {
       "type": "component",
-      "component": "info.email",
-      "repeatable": true
-    },
-    "bcc": {
-      "type": "component",
-      "component": "info.email",
-      "repeatable": true
+      "component": "info.configuracion-email",
+      "repeatable": false,
+      "required": true
     }
   }
 }

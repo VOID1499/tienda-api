@@ -22,15 +22,17 @@ const enviarEmailConfirmacionDePago = () => {
       if (pageTypes.includes(uid) && pageActions.includes(action) && params.data.estado) {
 
         const infoSite = await strapi.documents("api::informacion-del-sitio.informacion-del-sitio").findFirst({
-          fields:[],
+          fields:["titulo"],
           populate:{
-            bcc:true,
-            cc:true
+            email_config:{
+              populate:"*"
+            }
           }
         });
 
-         const ccEmails = infoSite.cc?.map(item => item.email) || [];
-         const bccEmails = infoSite.bcc?.map(item => item.email) || [];
+
+         const ccEmails = infoSite.email_config.cc?.map(item => item.email) || [];
+         const bccEmails = infoSite.email_config.bcc?.map(item => item.email) || [];
        
         // Obtener estado anterior antes de ejecutar el update
         const previous = await strapi.documents("api::orden.orden").findOne({
@@ -62,7 +64,6 @@ const enviarEmailConfirmacionDePago = () => {
           previous.createdAt = moment(previous.createdAt).tz("America/Santiago").format('MMMM YYYY h:mm:ss a');
 
           console.log(chalk.default.bgBlue("Enviando correo confirmacion de compra"))
-          
           await strapi
           .plugin("email-designer-5")
           .service("email")
@@ -71,6 +72,8 @@ const enviarEmailConfirmacionDePago = () => {
               to:previous.email,
               cc:ccEmails,
               bcc:bccEmails,
+              from:`${infoSite.titulo} <${infoSite.email_config.from}>`,
+              replyTo:`${infoSite.titulo} <${infoSite.email_config.reply_to}>`
               },
               {
                 templateReferenceId:1,
