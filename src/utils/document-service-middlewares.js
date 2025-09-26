@@ -7,6 +7,7 @@ const chalk = require("chalk");
 const sendEmailActions = ["publish"];
 
 const moment = require("moment-timezone");
+const infoSite = require("../api/informacion-del-sitio/controllers/informacion-del-sitio.js");
 require("moment/locale/es");
 moment.locale("es");
 
@@ -20,7 +21,7 @@ const enviarEmailConfirmacionDePago = () => {
       
       if (pageTypes.includes(uid) && pageActions.includes(action) && params.data.estado) {
 
-        const emailData = await strapi.documents("api::informacion-del-sitio.informacion-del-sitio").findFirst({
+        const infoSite = await strapi.documents("api::informacion-del-sitio.informacion-del-sitio").findFirst({
           fields:[],
           populate:{
             bcc:true,
@@ -28,8 +29,8 @@ const enviarEmailConfirmacionDePago = () => {
           }
         });
 
-         const ccEmails = emailData.cc?.map(item => item.email) || [];
-         const bccEmails = emailData.bcc?.map(item => item.email) || [];
+         const ccEmails = infoSite.cc?.map(item => item.email) || [];
+         const bccEmails = infoSite.bcc?.map(item => item.email) || [];
        
         // Obtener estado anterior antes de ejecutar el update
         const previous = await strapi.documents("api::orden.orden").findOne({
@@ -50,7 +51,7 @@ const enviarEmailConfirmacionDePago = () => {
         
         // Ejecuta el update
         const result = await next();
-        console.log( previous ,result)
+
         // Comparar estado y disparar correo solo si cambió a 'pagada'
         if (previous.estado !== result.estado && result.estado === 'pagada') {
           
@@ -73,6 +74,7 @@ const enviarEmailConfirmacionDePago = () => {
               },
               {
                 templateReferenceId:1,
+                subject: `Confirmacion de compra`,
               },
               {
                 orden:{...previous}
